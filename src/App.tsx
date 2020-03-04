@@ -13,6 +13,7 @@ import { dispatchAction } from './action$';
 import { selectGraph, deleteNode, deleteEdge } from './Graph/actions';
 import { selectedItem$, SelectedItemType } from './Graph/selectedItem$';
 import { withLatestFrom, map } from 'rxjs/operators';
+import Button from '@material-ui/core/Button';
 
 const Wrapper = styled.div`
   font-family: 'Helvetica';
@@ -24,16 +25,16 @@ const EditSelectedItem = ({ item }: { item: Node | Edge }) => {
     return (
       <h4>
         Selected {item.name}
-        <button onClick={() => dispatchAction(deleteNode(item.id))}>
+        <Button onClick={() => dispatchAction(deleteNode(item.id))}>
           Delete
-        </button>
+        </Button>
       </h4>
     );
   }
   return (
     <h4>
       Selected {item.source.name} --&gt; {item.target.name}
-      <button onClick={() => dispatchAction(deleteEdge(item.id))} />
+      <Button onClick={() => dispatchAction(deleteEdge(item.id))} />
     </h4>
   );
 };
@@ -76,13 +77,13 @@ export default function App() {
       {selectedItem && <EditSelectedItem item={selectedItem} />}
       {selectedGraph && (
         <>
-          <button
+          <Button
             onClick={() =>
               writeGraphData(selectedGraph).then(console.log.bind(null))
             }
           >
             Save Graph
-          </button>
+          </Button>
           <GraphViz graph={selectedGraph} />
         </>
       )}
