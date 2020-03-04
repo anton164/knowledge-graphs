@@ -1,8 +1,12 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import App from './App';
+import { initializeFirebase } from './api/firebase';
+import './spy';
 
-ReactDOM.render(<App name="Learnlink" />, document.querySelector('#container'));
+ReactDOM.render(<App />, document.querySelector('#container'));
+
+initializeFirebase();
 
 if (module && module.hot) {
   module.hot.accept();
