@@ -99,7 +99,6 @@ const GraphViz = ({ graph }: GraphVizProps) => {
   return (
     <Container>
       <div style={{ width: 800, height: 500 }}>
-        <h2>Learning Graph: {graph.domain}</h2>
         <GraphView
           // ref="GraphView"
           nodeKey={NODE_KEY}

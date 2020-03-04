@@ -10,10 +10,16 @@ import {
   findEdgeById,
 } from './Graph/selectedGraph$';
 import { dispatchAction } from './action$';
-import { selectGraph, deleteNode, deleteEdge } from './Graph/actions';
+import {
+  selectGraph,
+  deleteNode,
+  deleteEdge,
+  updateNode,
+} from './Graph/actions';
 import { selectedItem$, SelectedItemType } from './Graph/selectedItem$';
 import { withLatestFrom, map } from 'rxjs/operators';
 import Button from '@material-ui/core/Button';
+import { Drawer, Divider, Input } from '@material-ui/core';
 
 const Wrapper = styled.div`
   font-family: 'Helvetica';
@@ -24,8 +30,25 @@ const EditSelectedItem = ({ item }: { item: Node | Edge }) => {
   if (isNode(item)) {
     return (
       <h4>
-        Selected {item.name}
-        <Button onClick={() => dispatchAction(deleteNode(item.id))}>
+        Selected node
+        <br />
+        <Input
+          value={item.name}
+          onChange={event => {
+            dispatchAction(
+              updateNode({
+                id: item.id,
+                diff: {
+                  name: event.target.value,
+                },
+              })
+            );
+          }}
+        />
+        <Button
+          color="secondary"
+          onClick={() => dispatchAction(deleteNode(item.id))}
+        >
           Delete
         </Button>
       </h4>
@@ -66,6 +89,10 @@ export default function App() {
   }, []);
   return (
     <Wrapper>
+      <Drawer variant="permanent" anchor="right" open={true}>
+        <Divider />
+        {selectedItem && <EditSelectedItem item={selectedItem} />}
+      </Drawer>
       <h4>Listing graphs:</h4>
       <ul>
         {graphs.map(graph => (
@@ -74,10 +101,11 @@ export default function App() {
           </ul>
         ))}
       </ul>
-      {selectedItem && <EditSelectedItem item={selectedItem} />}
       {selectedGraph && (
         <>
+          <h3>Learning Graph: {selectedGraph.domain}</h3>
           <Button
+            color="primary"
             onClick={() =>
               writeGraphData(selectedGraph).then(console.log.bind(null))
             }

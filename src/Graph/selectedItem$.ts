@@ -1,6 +1,6 @@
 import { reduceState } from 'rxbeach/operators';
 import { action$ } from '../action$';
-import { selectNode, selectEdge } from './actions';
+import { selectNode, selectEdge, createNode, createEdge } from './actions';
 import { reducer } from 'rxbeach';
 import { selectedGraph$, findEdgeById, findNodeById } from './selectedGraph$';
 
@@ -23,6 +23,10 @@ const handleSelectEdge = reducer(selectEdge, (_: SelectedItemState, id) => ({
   id,
 }));
 
+const resetSelection = () => null;
+const handleCreateNode = reducer<SelectedItemState>(createNode, resetSelection);
+const handleCreateEdge = reducer<SelectedItemState>(createEdge, resetSelection);
+
 const handleGraphChange = reducer(
   selectedGraph$,
   (currentSelection: SelectedItemState, graph) => {
@@ -40,5 +44,7 @@ export const selectedItem$ = action$.pipe(
     handleSelectNode,
     handleSelectEdge,
     handleGraphChange,
+    handleCreateNode,
+    handleCreateEdge,
   ])
 );
