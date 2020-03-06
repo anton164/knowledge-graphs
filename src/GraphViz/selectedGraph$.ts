@@ -8,6 +8,8 @@ import {
   createEdge,
   deleteEdge,
   deleteNode,
+  updateGraph,
+  createGraph,
 } from './actions';
 import { reducer } from 'rxbeach';
 import { LearningGraph, Node } from './types';
@@ -29,16 +31,12 @@ const handleUpdateNode = reducer(
   (graph: LearningGraph, { id, diff }) => {
     const oldNode = findNodeById(graph, id);
     if (!oldNode) {
-      console.error('Node not found when updating');
-      return graph;
+      throw Error('Node not found when updating');
     }
     const updatedNode = {
       ...oldNode,
       ...diff,
     };
-
-    console.log('Updated node', updatedNode);
-
     const newGraph = {
       ...graph,
       nodes: graph.nodes.map(node => {
@@ -97,6 +95,17 @@ const handleCreateEdge = reducer(
   }
 );
 
+const handleCreateGraph = reducer(createGraph, (_: LearningGraph, { name }) => {
+  return { id: generateId(), name, nodes: [], edges: [] };
+});
+
+const handleUpdateGraph = reducer(
+  updateGraph,
+  (graph: LearningGraph, { name }) => {
+    return { ...graph, name };
+  }
+);
+
 const handleDeleteEdge = reducer(deleteEdge, (graph: LearningGraph, id) => {
   return { ...graph, edges: graph.edges.filter(edge => edge.id !== id) };
 });
@@ -113,5 +122,7 @@ export const selectedGraph$ = action$.pipe(
     handleCreateEdge,
     handleDeleteEdge,
     handleDeleteNode,
+    handleCreateGraph,
+    handleUpdateGraph,
   ])
 );

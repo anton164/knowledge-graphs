@@ -71,7 +71,7 @@ const nodes: Record<string, Node> = {
 
 export const CampusIncrementGraph: LearningGraph = {
   id: 'Qa6EI8VR6bQKehMtPlQb',
-  domain: 'Mathematics (8-10 grade), Campus Inkrement',
+  name: 'Mathematics (8-10 grade), Campus Inkrement',
   nodes: Object.values(nodes),
   edges: [
     {

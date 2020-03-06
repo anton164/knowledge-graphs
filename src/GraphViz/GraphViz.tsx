@@ -10,7 +10,8 @@ import {
   selectNode,
 } from './actions';
 import { dispatchAction } from '../action$';
-import { generateId } from '../utils';
+import NodeShape from './NodeShape';
+import { findNodeById } from './selectedGraph$';
 
 interface GraphVizProps {
   graph: LearningGraph;
@@ -24,10 +25,6 @@ type ContainerProps = {
 const Container = styled.div<ContainerProps>`
   padding: ${props => ('padding' in props ? props.padding : '0')};
   margin: ${props => ('margin' in props ? props.margin : 0)};
-`;
-
-const NodeText = styled.div`
-  text-align: center;
 `;
 
 const NODE_KEY = 'id';
@@ -105,14 +102,15 @@ const GraphViz = ({ graph }: GraphVizProps) => {
           nodes={nodes}
           edges={edges}
           selected={{}}
-          renderNodeText={({ title }) => {
-            return (
-              <foreignObject x="-100" y="-30" width="200" height="50">
-                <NodeText>
-                  <h5>{title}</h5>
-                </NodeText>
-              </foreignObject>
-            );
+          renderNode={(nodeRef, data, id, selected) => {
+            const node = findNodeById(graph, data.id);
+            console.log(node);
+            return node ? (
+              <NodeShape key={id} node={node} isSelected={selected} />
+            ) : null;
+          }}
+          renderNodeText={() => {
+            return null;
           }}
           nodeTypes={GraphConfig.NodeTypes}
           nodeSubtypes={GraphConfig.NodeSubtypes}

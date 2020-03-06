@@ -9,6 +9,8 @@ export const createNode = actionCreator<Pick<Node, 'name' | 'position'>>(
 export const updateNode = actionCreator<{ id: string; diff: Partial<Node> }>(
   'UPDATE_NODE'
 );
+export const updateGraph = actionCreator<{ name: string }>('UPDATE_GRAPH');
+export const createGraph = actionCreator<{ name: string }>('CREATE_GRAPH');
 export const selectGraph = actionCreator<LearningGraph>('SELECT_GRAPH');
 
 export const createEdge = actionCreator<{ sourceId: string; targetId: string }>(

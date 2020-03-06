@@ -1,6 +1,6 @@
 export type LearningGraph = {
   id: string;
-  domain: string;
+  name: string;
   nodes: Node[];
   edges: Edge[];
 };
@@ -9,7 +9,6 @@ export type Node = {
   id: string;
   name: string;
   resources: Resource;
-  subGraph?: LearningGraph;
   position: {
     x: number;
     y: number;
@@ -46,7 +45,7 @@ type RawEdge = {
 
 export type RawLearningGraph = {
   id: string;
-  domain: string;
+  name: string;
   nodes: RawNode[];
   edges: RawEdge[];
 };

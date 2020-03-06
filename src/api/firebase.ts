@@ -1,5 +1,5 @@
 import * as firebase from 'firebase';
-import { LearningGraph, RawLearningGraph } from '../Graph/types';
+import { LearningGraph, RawLearningGraph } from '../GraphViz/types';
 import { generateId } from '../utils';
 import firebaseConfig from '../firebaseConfig';
 

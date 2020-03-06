@@ -4,9 +4,8 @@ import App from './App';
 import { initializeFirebase } from './api/firebase';
 import './spy';
 
-ReactDOM.render(<App />, document.querySelector('#container'));
-
 initializeFirebase();
+ReactDOM.render(<App />, document.querySelector('#container'));
 
 if (module && module.hot) {
   module.hot.accept();
