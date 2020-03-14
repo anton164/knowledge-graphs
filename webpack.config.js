@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'); 
 
 module.exports = {
   mode: 'development',
@@ -24,6 +25,10 @@ module.exports = {
     filename: 'app.js',
   },
   plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      async: true,
+      reportFiles: ['**/*.{ts,tsx}', '!src/skip.ts']
+    }),
     new webpack.DefinePlugin({
       __DEV__: true,
     }),

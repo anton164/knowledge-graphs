@@ -10,6 +10,7 @@ import { selectGraph, updateGraph } from './GraphViz/actions';
 import Button from '@material-ui/core/Button';
 import { Input } from '@material-ui/core';
 import ListGraphs from './ListGraphs';
+import Sidebar from './Sidebar';
 
 const Wrapper = styled.div`
   font-family: 'Helvetica';
@@ -28,10 +29,11 @@ export default function App() {
   }, []);
   return (
     <Wrapper>
+      <Sidebar />
       <ListGraphs graphs={graphs} />
       {selectedGraph && (
         <>
-          <h3>Selected Graph</h3>
+          <h3>Showing Knowledge graph for student "Anton Abilov"</h3>
           <Input
             style={{ width: '600px' }}
             value={selectedGraph.name}

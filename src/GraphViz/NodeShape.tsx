@@ -10,6 +10,11 @@ import styled from 'styled-components';
 import debounce from 'lodash.debounce';
 import RootPortal from '../RootPortal';
 import { Node } from './types';
+import { deleteNode } from './actions';
+import { dispatchAction } from '../action$';
+import { useStream } from '../useStream';
+import { map } from 'rxjs/operators';
+import { graphProgress$ } from './graphProgress$';
 
 type NodePopoverProps = {
   node: Node;
@@ -22,7 +27,8 @@ type NodePopoverProps = {
 };
 const PopoverWrapper = styled.div`
   position: absolute;
-  z-index: 1;
+  max-width: 250px;
+  z-index: 1201;
   ${({ position }: Pick<NodePopoverProps, 'position'>) => `
     top: ${position.top}px;
     left: ${position.left}px;
@@ -36,14 +42,21 @@ const NodePopover = ({ node, position }: NodePopoverProps) => {
           <Typography color="textSecondary" gutterBottom>
             {node.name}
           </Typography>
-          <Typography variant="body2" component="p">
+          {/* <Typography variant="body2" component="p">
             well meaning and kindly.
             <br />
             {'"a benevolent smile"'}
-          </Typography>
+          </Typography> */}
         </CardContent>
         <CardActions>
           <Button size="small">Learn More</Button>
+          <Button
+            size="small"
+            color="secondary"
+            onClick={() => dispatchAction(deleteNode(node.id))}
+          >
+            Delete
+          </Button>
         </CardActions>
       </Card>
     </PopoverWrapper>
@@ -55,9 +68,25 @@ type NodeShapeProps = {
   isSelected: boolean;
 };
 
-const NodeText = styled.div`
+const NodeText = styled.h5`
   text-align: center;
+  max-width: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 20px auto;
 `;
+
+const colorByProgress = (progress: number | null) => {
+  if (!progress) {
+    return 'gray';
+  } else if (progress < 25) {
+    return '#ff9191';
+  } else if (progress < 75) {
+    return '#ffff7c';
+  }
+  return '#8cff8a';
+};
 
 const NodeShape = ({ node }: NodeShapeProps) => {
   const [isPopoverShown, setShowPopover] = useState(false);
@@ -67,7 +96,11 @@ const NodeShape = ({ node }: NodeShapeProps) => {
       setShowPopover(false);
     }, 300);
   }, []);
-  const shapeRef = useRef<SVGGElement>(null);
+  const nodeProgress = useStream(
+    graphProgress$.pipe(map(({ byNodeId }) => byNodeId[node.id])),
+    null
+  );
+  const shapeRef = useRef<SVGUseElement>(null);
   const showPopover = useMemo(() => {
     return () => {
       debouncedHidePopover.cancel();
@@ -86,6 +119,7 @@ const NodeShape = ({ node }: NodeShapeProps) => {
       onMouseLeave={onMouseLeave}
     >
       <use
+        style={{ fill: colorByProgress(nodeProgress?.progress) }}
         ref={shapeRef}
         className={'node'}
         x={-150 / 2}
@@ -114,9 +148,7 @@ const NodeShape = ({ node }: NodeShapeProps) => {
         width="200"
         height="50"
       >
-        <NodeText>
-          <h5>{node.name}</h5>
-        </NodeText>
+        <NodeText>{node.name}</NodeText>
       </foreignObject>
     </g>
   );

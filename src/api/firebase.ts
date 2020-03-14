@@ -19,12 +19,13 @@ const rawGraph = (graph: LearningGraph): RawLearningGraph => ({
   })),
 });
 
-const materlizeGraph = (graph: RawLearningGraph): LearningGraph => {
+const materializeGraph = (graph: RawLearningGraph): LearningGraph => {
   const nodes = graph.nodes.map(node => ({
     ...node,
   }));
   return {
-    ...graph,
+    id: graph.id,
+    name: graph.name,
     nodes,
     edges: graph.edges.map(edge => ({
       id: edge.id || generateId(),
@@ -50,7 +51,7 @@ export const readOneGraph = async (id: string): Promise<LearningGraph> => {
     .get()) as firebase.firestore.QueryDocumentSnapshot<RawLearningGraph>;
 
   if (doc.exists) {
-    return materlizeGraph(doc.data());
+    return materializeGraph(doc.data());
   }
   throw Error('Not found');
 };
@@ -63,7 +64,7 @@ export const readAllGraphs = async (): Promise<LearningGraph[]> =>
     .then(querySnapshot => {
       return querySnapshot.docs.map(doc => {
         console.log('Fetched', doc.data());
-        return materlizeGraph({
+        return materializeGraph({
           ...doc.data(),
           id: doc.id,
         } as RawLearningGraph);

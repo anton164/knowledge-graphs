@@ -5,14 +5,30 @@ export type LearningGraph = {
   edges: Edge[];
 };
 
+export type Resource =
+  | {
+      type: ResourceType.VIDEO;
+      title: string;
+      url: string;
+    }
+  | {
+      type: ResourceType.GOAL_NODES;
+      goals: Node;
+    };
+
 export type Node = {
   id: string;
   name: string;
-  resources: Resource;
+  resources: Resource[];
   position: {
     x: number;
     y: number;
   };
+};
+
+export type NodeProgress = {
+  nodeId: string;
+  progress: number;
 };
 
 export type Edge = {
@@ -24,12 +40,26 @@ export type Edge = {
 
 export type EdgeType = string;
 
-export type Resource = {};
+export enum ResourceType {
+  VIDEO = 'video',
+  QUIZ = 'quiz',
+  GOAL_NODES = 'goal_nodes',
+}
+export type RawResource =
+  | {
+      type: ResourceType.VIDEO;
+      title: string;
+      url: string;
+    }
+  | {
+      type: ResourceType.GOAL_NODES;
+      goals: RawNode;
+    };
 
 type RawNode = {
   id: string;
   name: string;
-  resources: Resource;
+  resources: RawResource[];
   position: {
     x: number;
     y: number;

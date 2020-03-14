@@ -7,15 +7,33 @@ import {
   findEdgeById,
 } from './GraphViz/selectedGraph$';
 import { dispatchAction } from './action$';
-import { deleteNode, deleteEdge, updateNode } from './GraphViz/actions';
+import { deleteEdge, updateNode } from './GraphViz/actions';
 import { selectedItem$, SelectedItemType } from './GraphViz/selectedItem$';
 import { withLatestFrom, map } from 'rxjs/operators';
 import Button from '@material-ui/core/Button';
-import { Drawer, Input, InputLabel, FormControl } from '@material-ui/core';
+import {
+  Drawer,
+  Input,
+  InputLabel,
+  FormControl,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from '@material-ui/core';
+import styled from 'styled-components';
+import { curriculum } from './GraphViz/data';
+
+const getRelevantChapter = (nodeName: string) => {
+  return curriculum['MAT1-04-4'].chapters.find(
+    ({ title }) => title === nodeName
+  );
+};
 
 const isNode = (item: Node | Edge): item is Node => !(item as Edge).source;
 const SelectedItem = ({ item }: { item: Node | Edge }) => {
   if (isNode(item)) {
+    const chapter = getRelevantChapter(item.name);
     return (
       <>
         <h4>Selected node</h4>
@@ -35,12 +53,22 @@ const SelectedItem = ({ item }: { item: Node | Edge }) => {
             }}
           />
         </FormControl>
-        <Button
-          color="secondary"
-          onClick={() => dispatchAction(deleteNode(item.id))}
-        >
-          Delete
-        </Button>
+        {chapter && (
+          <>
+            <Typography color="textSecondary" gutterBottom>
+              Relevant goals
+            </Typography>
+            <List dense>
+              {chapter.goals.map(goal => {
+                return (
+                  <ListItem key={goal}>
+                    <ListItemText primary={goal} />
+                  </ListItem>
+                );
+              })}
+            </List>
+          </>
+        )}
       </>
     );
   }
@@ -59,6 +87,12 @@ const SelectedItem = ({ item }: { item: Node | Edge }) => {
   );
 };
 
+const DrawerContent = styled.div`
+  max-height: 150px;
+  overflow-y: scroll;
+  padding: 0 40px;
+`;
+
 const Sidebar = () => {
   const selectedItem = useStream(
     selectedItem$.pipe(
@@ -75,8 +109,11 @@ const Sidebar = () => {
     null
   );
   return (
-    <Drawer variant="permanent" anchor="right" open={true}>
-      {selectedItem && <SelectedItem item={selectedItem} />}
+    <Drawer variant="permanent" anchor="bottom" open={true}>
+      <DrawerContent>
+        {!selectedItem && <h4>Nothing selected</h4>}
+        {selectedItem && <SelectedItem item={selectedItem} />}
+      </DrawerContent>
     </Drawer>
   );
 };

@@ -1,0 +1,25 @@
+PL fy
+
+
+Noder: 
+
+  koble til mål
+  visualisere status med farge og tall for å vise oppnåelse
+
+
+Vise den til eleven?
+
+
+Målgruppe: 
+  foreldre og undervisere
+
+  zoome inn
+
+Lage graf av mål for et emne
+
+Viktig:
+- Koble med læringsinnhold
+- Finne avhengigheter
+
+Fokusere på:
+- Utbytte for en elev som ikke har en lærer tilgjengelig

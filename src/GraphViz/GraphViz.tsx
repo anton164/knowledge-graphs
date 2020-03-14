@@ -104,7 +104,6 @@ const GraphViz = ({ graph }: GraphVizProps) => {
           selected={{}}
           renderNode={(nodeRef, data, id, selected) => {
             const node = findNodeById(graph, data.id);
-            console.log(node);
             return node ? (
               <NodeShape key={id} node={node} isSelected={selected} />
             ) : null;
