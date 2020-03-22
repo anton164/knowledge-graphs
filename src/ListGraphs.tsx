@@ -1,10 +1,10 @@
 import React from 'react';
-import { LearningGraph } from './GraphViz/types';
+import { KnowledgeGraph } from './types';
 import { dispatchAction } from './action$';
 import { selectGraph, createGraph } from './GraphViz/actions';
 import Button from '@material-ui/core/Button';
 
-const ListGraphs = ({ graphs }: { graphs: LearningGraph[] }) => {
+const ListGraphs = ({ graphs }: { graphs: KnowledgeGraph[] }) => {
   return (
     <>
       <h4>Listing graphs:</h4>

@@ -1,4 +1,4 @@
-export type LearningGraph = {
+export type KnowledgeGraph = {
   id: string;
   name: string;
   nodes: Node[];
@@ -73,7 +73,7 @@ type RawEdge = {
   type?: EdgeType;
 };
 
-export type RawLearningGraph = {
+export type RawKnowledgeGraph = {
   id: string;
   name: string;
   nodes: RawNode[];

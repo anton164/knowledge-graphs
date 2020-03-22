@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components';
 import debounce from 'lodash.debounce';
 import RootPortal from '../RootPortal';
-import { Node } from './types';
+import { Node } from '../types';
 import { deleteNode } from './actions';
 import { dispatchAction } from '../action$';
 import { useStream } from '../useStream';

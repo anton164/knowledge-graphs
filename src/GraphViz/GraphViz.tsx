@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { LearningGraph } from './types';
+import { KnowledgeGraph } from '../types';
 import { GraphView, INode, IEdge } from 'react-digraph';
 import {
   updateNode,
@@ -14,7 +14,7 @@ import NodeShape from './NodeShape';
 import { findNodeById } from './selectedGraph$';
 
 interface GraphVizProps {
-  graph: LearningGraph;
+  graph: KnowledgeGraph;
 }
 
 type ContainerProps = {

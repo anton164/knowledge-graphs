@@ -1,5 +1,5 @@
 import * as firebase from 'firebase';
-import { LearningGraph, RawLearningGraph } from '../GraphViz/types';
+import { KnowledgeGraph, RawKnowledgeGraph } from '../types';
 import { generateId } from '../utils';
 import firebaseConfig from '../firebaseConfig';
 
@@ -7,7 +7,7 @@ export const initializeFirebase = () => {
   firebase.initializeApp(firebaseConfig);
 };
 
-const rawGraph = (graph: LearningGraph): RawLearningGraph => ({
+const rawGraph = (graph: KnowledgeGraph): RawKnowledgeGraph => ({
   ...graph,
   edges: graph.edges.map(edge => ({
     id: edge.id,
@@ -19,7 +19,7 @@ const rawGraph = (graph: LearningGraph): RawLearningGraph => ({
   })),
 });
 
-const materializeGraph = (graph: RawLearningGraph): LearningGraph => {
+const materializeGraph = (graph: RawKnowledgeGraph): KnowledgeGraph => {
   const nodes = graph.nodes.map(node => ({
     ...node,
   }));
@@ -35,7 +35,7 @@ const materializeGraph = (graph: RawLearningGraph): LearningGraph => {
   };
 };
 
-export const writeGraphData = (graph: LearningGraph) => {
+export const writeGraphData = (graph: KnowledgeGraph) => {
   return firebase
     .firestore()
     .collection(`graphs`)
@@ -43,12 +43,12 @@ export const writeGraphData = (graph: LearningGraph) => {
     .set(rawGraph(graph));
 };
 
-export const readOneGraph = async (id: string): Promise<LearningGraph> => {
+export const readOneGraph = async (id: string): Promise<KnowledgeGraph> => {
   const doc = (await firebase
     .firestore()
     .collection(`graphs`)
     .doc(id)
-    .get()) as firebase.firestore.QueryDocumentSnapshot<RawLearningGraph>;
+    .get()) as firebase.firestore.QueryDocumentSnapshot<RawKnowledgeGraph>;
 
   if (doc.exists) {
     return materializeGraph(doc.data());
@@ -56,7 +56,7 @@ export const readOneGraph = async (id: string): Promise<LearningGraph> => {
   throw Error('Not found');
 };
 
-export const readAllGraphs = async (): Promise<LearningGraph[]> =>
+export const readAllGraphs = async (): Promise<KnowledgeGraph[]> =>
   firebase
     .firestore()
     .collection('graphs')
@@ -67,6 +67,6 @@ export const readAllGraphs = async (): Promise<LearningGraph[]> =>
         return materializeGraph({
           ...doc.data(),
           id: doc.id,
-        } as RawLearningGraph);
+        } as RawKnowledgeGraph);
       });
     });

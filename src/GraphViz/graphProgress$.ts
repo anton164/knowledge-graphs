@@ -2,7 +2,7 @@ import { reduceState } from 'rxbeach/operators';
 import { action$ } from '../action$';
 import { reducer } from 'rxbeach';
 import { selectedGraph$ } from './selectedGraph$';
-import { NodeProgress, Node } from './types';
+import { NodeProgress, Node } from '../types';
 
 type GraphProgressState = {
   byNodeId: Record<string, NodeProgress>;

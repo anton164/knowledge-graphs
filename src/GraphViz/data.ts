@@ -1,4 +1,4 @@
-import { LearningGraph, Node, ResourceType } from './types';
+import { KnowledgeGraph, Node, ResourceType } from '../types';
 
 const ROW_LENGTH = 200;
 const SPLIT_LENGTH = 100;
@@ -75,7 +75,7 @@ const nodes: Record<string, Node> = {
   },
 };
 
-export const CampusIncrementGraph: LearningGraph = {
+export const CampusIncrementGraph: KnowledgeGraph = {
   id: 'Qa6EI8VR6bQKehMtPlQb',
   name: 'Mathematics (8-10 grade), Campus Inkrement',
   nodes: Object.values(nodes),

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Node, Edge } from './GraphViz/types';
+import { Node, Edge } from './types';
 import { useStream } from './useStream';
 import {
   selectedGraph$,
@@ -109,7 +109,7 @@ const Sidebar = () => {
     null
   );
   return (
-    <Drawer variant="permanent" anchor="bottom" open={true}>
+    <Drawer variant="permanent" anchor="right" open={true}>
       <DrawerContent>
         {!selectedItem && <h4>Nothing selected</h4>}
         {selectedItem && <SelectedItem item={selectedItem} />}

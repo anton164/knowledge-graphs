@@ -1,5 +1,5 @@
 import { actionCreator } from 'rxbeach';
-import { LearningGraph, Node } from './types';
+import { KnowledgeGraph, Node } from '../types';
 
 type Id = string;
 
@@ -11,7 +11,7 @@ export const updateNode = actionCreator<{ id: string; diff: Partial<Node> }>(
 );
 export const updateGraph = actionCreator<{ name: string }>('UPDATE_GRAPH');
 export const createGraph = actionCreator<{ name: string }>('CREATE_GRAPH');
-export const selectGraph = actionCreator<LearningGraph>('SELECT_GRAPH');
+export const selectGraph = actionCreator<KnowledgeGraph>('SELECT_GRAPH');
 
 export const createEdge = actionCreator<{ sourceId: string; targetId: string }>(
   'CREATE_EDGE'

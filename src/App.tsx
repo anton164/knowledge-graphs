@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GraphViz from './GraphViz/GraphViz';
 import { readAllGraphs, writeGraphData } from './api/firebase';
-import { LearningGraph } from './GraphViz/types';
+import { KnowledgeGraph } from './types';
 import { useStream } from './useStream';
 import { selectedGraph$ } from './GraphViz/selectedGraph$';
 import { dispatchAction } from './action$';
@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 
 export default function App() {
   const selectedGraph = useStream(selectedGraph$, null);
-  const [graphs, setGraphs] = useState<LearningGraph[]>([]);
+  const [graphs, setGraphs] = useState<KnowledgeGraph[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       const fetchedGraphs = await readAllGraphs();

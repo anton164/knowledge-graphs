@@ -12,23 +12,23 @@ import {
   createGraph,
 } from './actions';
 import { reducer } from 'rxbeach';
-import { LearningGraph, Node } from './types';
+import { KnowledgeGraph, Node } from '../types';
 import { generateId } from '../utils';
 
 const defaultState = CampusIncrementGraph;
-export const findNodeById = (graph: LearningGraph, id: string) =>
+export const findNodeById = (graph: KnowledgeGraph, id: string) =>
   graph.nodes.find(node => node.id === id);
 
-export const findEdgeById = (graph: LearningGraph, id: string) =>
+export const findEdgeById = (graph: KnowledgeGraph, id: string) =>
   graph.edges.find(edge => edge.id === id);
 
 const handleSelectGraph = reducer(
   selectGraph,
-  (_: LearningGraph, graph) => graph
+  (_: KnowledgeGraph, graph) => graph
 );
 const handleUpdateNode = reducer(
   updateNode,
-  (graph: LearningGraph, { id, diff }) => {
+  (graph: KnowledgeGraph, { id, diff }) => {
     const oldNode = findNodeById(graph, id);
     if (!oldNode) {
       throw Error('Node not found when updating');
@@ -56,7 +56,7 @@ const handleUpdateNode = reducer(
 );
 const handleCreateNode = reducer(
   createNode,
-  (graph: LearningGraph, { name, position }) => {
+  (graph: KnowledgeGraph, { name, position }) => {
     return {
       ...graph,
       nodes: [
@@ -74,13 +74,13 @@ const handleCreateNode = reducer(
 
 const handleCreateEdge = reducer(
   createEdge,
-  (graph: LearningGraph, { sourceId, targetId }) => {
+  (graph: KnowledgeGraph, { sourceId, targetId }) => {
     const source = findNodeById(graph, sourceId);
     const target = findNodeById(graph, targetId);
     if (!source || !target) {
       throw Error('Node not found when creating edges');
     }
-    const newGraph: LearningGraph = {
+    const newGraph: KnowledgeGraph = {
       ...graph,
       edges: [
         ...graph.edges,
@@ -95,22 +95,25 @@ const handleCreateEdge = reducer(
   }
 );
 
-const handleCreateGraph = reducer(createGraph, (_: LearningGraph, { name }) => {
-  return { id: generateId(), name, nodes: [], edges: [] };
-});
+const handleCreateGraph = reducer(
+  createGraph,
+  (_: KnowledgeGraph, { name }) => {
+    return { id: generateId(), name, nodes: [], edges: [] };
+  }
+);
 
 const handleUpdateGraph = reducer(
   updateGraph,
-  (graph: LearningGraph, { name }) => {
+  (graph: KnowledgeGraph, { name }) => {
     return { ...graph, name };
   }
 );
 
-const handleDeleteEdge = reducer(deleteEdge, (graph: LearningGraph, id) => {
+const handleDeleteEdge = reducer(deleteEdge, (graph: KnowledgeGraph, id) => {
   return { ...graph, edges: graph.edges.filter(edge => edge.id !== id) };
 });
 
-const handleDeleteNode = reducer(deleteNode, (graph: LearningGraph, id) => {
+const handleDeleteNode = reducer(deleteNode, (graph: KnowledgeGraph, id) => {
   return { ...graph, nodes: graph.nodes.filter(node => node.id !== id) };
 });
 
