@@ -24,3 +24,7 @@ The prototype allows anyone to create a new graph, since we assume that knowledg
 3. Update the firebase config in `src/firebaseConfig.ts` to persist graphs to a [firestore instance](https://cloud.google.com/firestore)
 4. Access http://localhost:9000
 
+
+## Interacting with the graph
+- Shift-click the canvas to create a new node
+- Click a node or edge to edit it
