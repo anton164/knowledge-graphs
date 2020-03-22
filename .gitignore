@@ -2,3 +2,4 @@ node_modules
 yarn-error.log
 public/app.js
 src/firebaseConfig.ts
+dist

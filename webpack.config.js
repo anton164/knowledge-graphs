@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'); 
+const HtmlWebpackPlugin = require('html-webpack-plugin'); 
 
 module.exports = {
   mode: 'development',
@@ -20,11 +21,15 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    path: `${__dirname}/public`,
+    path: `${__dirname}/dist`,
     publicPath: '/',
     filename: 'app.js',
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Knowledge graphs',
+      template: 'src/index.html'
+    }),
     new ForkTsCheckerWebpackPlugin({
       async: true,
       reportFiles: ['**/*.{ts,tsx}', '!src/skip.ts']

@@ -29,6 +29,9 @@ module.exports = {
     minimizer: [new TerserPlugin()],
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Knowledge graphs'
+    }),
     new webpack.DefinePlugin({
       __DEV__: true,
     }),
