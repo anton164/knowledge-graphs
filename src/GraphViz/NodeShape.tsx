@@ -42,11 +42,6 @@ const NodePopover = ({ node, position }: NodePopoverProps) => {
           <Typography color="textSecondary" gutterBottom>
             {node.name}
           </Typography>
-          {/* <Typography variant="body2" component="p">
-            well meaning and kindly.
-            <br />
-            {'"a benevolent smile"'}
-          </Typography> */}
         </CardContent>
         <CardActions>
           <Button size="small">Learn More</Button>
@@ -77,7 +72,7 @@ const NodeText = styled.h5`
   margin: 20px auto;
 `;
 
-const colorByProgress = (progress: number | null) => {
+const colorByProgress = (progress: number | undefined | null) => {
   if (!progress) {
     return 'gray';
   } else if (progress < 25) {
