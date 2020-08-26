@@ -1,5 +1,5 @@
 # Knowledge Graphs
-This project contains a prototype for visualizing a learner's progress using a knowledge graph _[(read more about the project's motivation here)](https://learnlink.no/research-digital-learning-assistant/)_.
+This project contains a prototype for visualizing a learner's progress using a knowledge graph _[(read more about the project's motivation here)](https://docs.google.com/document/d/1qBvT04XL3_nN5ziYyZpgOEUsM8FMjhYHFu0M2pr5-4U/edit#heading=h.orgg9exffmxc)_.
 
 A knowledge graph is a graph structure that can represent any subject domain:
 - each circle represents a topic within a subject
